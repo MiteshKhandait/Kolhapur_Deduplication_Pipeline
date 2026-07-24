@@ -24,3 +24,35 @@ logging:
 duplicate_detection:
   similarity_threshold: 0.85
   review_threshold: 0.65
+
+
+
+date_columns:
+  - Incorporation Date
+  - Commmence Date
+
+dtype_columns:
+  integer:
+    - Employment
+
+  float:
+    - Investment Cost (In Rs.)
+    - Net Turnover (In Rs.)
+
+  string:
+    - Sl No.
+    - Udyam Reg. No
+    - Enterprise Name
+    - Owner Name
+    - Address
+    - PinCode
+    - District
+    - State
+    - DIC
+    - Major Activity
+    - Social Category
+    - Gender
+    - Organisation Type
+    - Mobile No.
+    - Email Id
+    - Enterprise Type
