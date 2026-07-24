@@ -1,0 +1,26 @@
+# ==========================
+# PROJECT CONFIGURATION
+# ==========================
+
+project:
+  name: "Enterprise Deduplication Pipeline"
+  version: "2.0"
+
+paths:
+  raw_data: "data/raw"
+  interim_data: "data/interim"
+  processed_data: "data/processed"
+  logs: "logs"
+
+output:
+  save_parquet: true
+  save_csv: true
+  save_excel: true
+
+logging:
+  level: INFO
+  log_file: "pipeline.log"
+
+duplicate_detection:
+  similarity_threshold: 0.85
+  review_threshold: 0.65
