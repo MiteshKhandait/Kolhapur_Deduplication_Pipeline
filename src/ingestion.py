@@ -189,3 +189,175 @@ def validate_master_dataframe(
     )
 
     print("\nValidation completed.\n")
+
+
+
+def convert_dates_to_string(
+    df: pd.DataFrame,
+    config: dict
+) -> pd.DataFrame:
+    """
+    Convert datetime columns to YYYY-MM-DD strings
+    before exporting to Excel.
+    """
+
+    date_columns = config["date_columns"]
+
+    df = df.copy()
+
+    for column in date_columns:
+
+        if column in df.columns:
+
+            df[column] = (
+                df[column]
+                .dt.strftime("%Y-%m-%d")
+                .astype("string")
+            )
+
+    return df
+
+
+def save_master_dataset(
+    df: pd.DataFrame,
+    config: dict
+) -> None:
+    """
+    Save the merged master dataset as a Parquet file.
+    """
+
+    output_path = (
+        Path(config["paths"]["interim_data"])
+        / "master_dataset.parquet"
+    )
+
+    output_path.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    df.to_parquet(
+        output_path,
+        index=False
+    )
+
+    print(f"\nMaster dataset saved to:\n{output_path}\n")
+
+
+
+def export_master_dataset_excel(
+    df: pd.DataFrame,
+    config: dict
+) -> None:
+    """
+    Export the master dataset to an Excel file
+    for manual inspection.
+    """
+
+    output_path = (
+        Path(config["paths"]["interim_data"])
+        / "master_dataset.xlsx"
+    )
+
+    output_path.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    df.to_excel(
+        output_path,
+        index=False
+    )
+
+    print(
+        f"\nMaster dataset exported to:\n{output_path}\n"
+    )
+
+
+def load_master_dataset(
+    config: dict
+) -> pd.DataFrame:
+    """
+    Load the saved master dataset from the interim folder.
+    """
+
+    input_path = (
+        Path(config["paths"]["interim_data"])
+        / "master_dataset.parquet"
+    )
+
+    if not input_path.exists():
+        raise FileNotFoundError(
+            f"Master dataset not found: {input_path}"
+        )
+
+    print("\nLoading master dataset...\n")
+
+    master_df = pd.read_parquet(input_path)
+
+    print(
+        f"Master dataset loaded successfully.\n"
+        f"Shape: {master_df.shape}\n"
+    )
+
+    return master_df
+
+
+def save_master_dataset(
+    df: pd.DataFrame,
+    config: dict
+) -> None:
+    """
+    Save the cleaned master dataset after removing
+    invalid rows.
+    """
+
+    output_path = (
+        Path(config["paths"]["interim_data"])
+        / "master_dataset.parquet"
+    )
+
+    df.to_parquet(
+        output_path,
+        index=False
+    )
+
+    print(
+        "\nClean master dataset saved successfully."
+    )
+
+    print(
+        f"Shape: {df.shape}"
+    )
+
+
+
+def load_master_excel(
+    config: dict
+) -> pd.DataFrame:
+    """
+    Load the merged master Excel dataset.
+    """
+
+    input_path = (
+        Path(config["paths"]["interim_data"])
+        / "master_dataset.xlsx"
+    )
+
+    if not input_path.exists():
+        raise FileNotFoundError(
+            f"Master Excel file not found: {input_path}"
+        )
+
+    print("\nLoading master Excel dataset...\n")
+
+    master_df = pd.read_excel(
+        input_path
+    )
+
+    print(
+        f"Master dataset loaded successfully.\n"
+        f"Shape: {master_df.shape}\n"
+    )
+
+    return master_df

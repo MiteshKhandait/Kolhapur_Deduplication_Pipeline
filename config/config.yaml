@@ -38,10 +38,11 @@ dtype_columns:
   float:
     - Investment Cost (In Rs.)
     - Net Turnover (In Rs.)
+    - Latitude
+    - Longitude
 
   string:
     - Sl No.
-    - Udyam Reg. No
     - Enterprise Name
     - Owner Name
     - Address
@@ -56,3 +57,81 @@ dtype_columns:
     - Mobile No.
     - Email Id
     - Enterprise Type
+
+
+address_cleaning:
+
+  unicode_replacements:
+    "–": "-"
+    "“": ""
+    "”": ""
+    "\u200e": ""
+    "\xad": ""
+
+  remove_pattern: '[\[\]{}*+,;|()]'
+
+
+
+invalid_row_patterns:
+
+  reason: "Sequential Number Pattern"
+
+  patterns:
+    - "101102103104105106107108109110"
+    - "111112113114115116117118119120"
+    - "11121314151617181920"
+    - "121122123124125126127128129130"
+    - "122123124125126127128129130131"
+    - "21222324252627282930"
+    - "919293949596979899100"
+    - "12345678910"
+    - "31323334353637383940"
+    - "41424344454647484950"
+    - "51525354555657585960"
+    - "61626364656667686970"
+    - "71727374757677787980"
+    - "81828384858687888990"
+    - "171172173174175176177178179180"
+    - "181182183184185186187188189190"
+    - "151152153154155156157158159160"
+    - "161162163164165166167168169170"
+    - "191192193194195196197198199200"
+    - "141142143144145146147148149150"
+    - "131132133134135136137138139140"
+    - "198199200201202203204205206207"
+
+
+
+duplicate_scoring:
+
+  threshold:
+    high_confidence: 85
+
+    manual_review: 45
+
+  weights:
+
+    enterprise_name: 30
+
+    owner_name: 30
+
+    mobile_number: 25
+
+    email_id: 10
+
+    investment_cost: 2.5
+
+    turnover: 2.5
+
+
+origin_file_rank:
+
+  "2020-2021.xlsx": 1
+
+  "2021-2022.xls": 2
+
+  "UDYAM_22-23.xlsx": 3
+
+  "UDYAM REGISTRATION KOLHAPUR 2023-24.xlsx": 4
+
+  "UDYAM REGISTRATION KOLHAPUR 2024-25.xlsx": 5
