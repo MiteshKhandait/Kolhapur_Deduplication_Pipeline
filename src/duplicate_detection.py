@@ -361,11 +361,6 @@ def split_datasets(
         errors="ignore"
     )
 
-    master_df = master_df[
-        ~master_df["Udyam Reg. No"].isin(
-            review_groups
-        )
-    ]
 
     duplicate_df = clean_df.loc[
         remove_indices
